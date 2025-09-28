@@ -14,8 +14,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id         Int      @id @default(autoincrement())
+  username   String   @db.VarChar(255) 
+  email      String   @unique @db.VarChar(255)
+  password   String   @db.VarChar(255)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Partner {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(255)
+  logo   String? @db.VarChar(255) 
+  domain String @unique @db.VarChar(255)
+
+  @@map("partners")
+}
+
+model Project {
+  id          Int              @id @default(autoincrement())
+  name        String           @db.VarChar(255)
+  description String?          @db.Text 
+  url         String?          @db.VarChar(255)
+  preview     String?          @db.VarChar(255)
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+
+  @@map("projects")
 }
